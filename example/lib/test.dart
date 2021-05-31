@@ -1,8 +1,3 @@
-# flutter_obj_editor
-auto generate widget from dart class, custom apperence by rewrite "obj_edit_widgets"
-
-Example:
-```dart
 import 'package:obj_edit_annotation/obj_edit_annotation.dart';
 
 import 'obj_option.dart';
@@ -39,8 +34,3 @@ class Test {
 
   Test(this.name, this.option, this.objOption, this.name2, this.option2);
 }
-
-```
-generated widget:
-
-![image](doc/images/auto_gen_widget.png)

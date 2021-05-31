@@ -1,0 +1,8 @@
+builders:
+  objEditBuilder:
+    import: "package:obj_edit_gen/builder.dart"
+    builder_factories: ["objEditBuilder"]
+    build_extensions: {".dart": [".e.part"]}
+    auto_apply: root_package
+    build_to: source
+ 
