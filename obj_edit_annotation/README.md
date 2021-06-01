@@ -1,14 +1,9 @@
 # obj_edit_annotation
 
-A new Flutter package project.
+Classes and helper functions that support widget code generation via the
+  [obj_edit_gen] package.
 
-## Getting Started
+See the [example] to understand how to configure your package.
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+[example]: https://github.com/driftboat/flutter_obj_editor/tree/main/example
+[obj_edit_gen]: https://github.com/driftboat/flutter_obj_editor/tree/main/obj_edit_gen

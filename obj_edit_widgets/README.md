@@ -1,14 +1,13 @@
 # obj_edit_widgets
 
-A new Flutter package project.
+ widgets that support widget code generation via the
+  `obj_edit_gen` package.
 
-## Getting Started
+## Widges
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+- ObjEditor： Root Object Widget
+- ObjSection: Section Widget
+- TextTile: Text Field Widget
+- DropDownTile: Option Field Widget
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+ 
