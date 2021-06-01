@@ -6,15 +6,11 @@ dependencies to your `pubspec.yaml`.
 ```yaml
 dependencies: 
   obj_edit_annotation: ^1.0.0
-  obj_edit_widgets: ^1.0.0
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  obj_edit_widgets: ^1.0.0 
 
 dev_dependencies: 
   build_runner: ^2.0.0
-  obj_edit_gen:
-      path: ^1.0.0
+  obj_edit_gen: ^1.0.0
 ```
 
 Annotate your code with classes defined in
