@@ -9,7 +9,7 @@ To configure your project for the latest released version of,
 
 ## Example
 
-Given a library `example.dart` with an `Test` class annotated with
+Given a library `test.dart` with an `Test` class annotated with
 `@ObjEdit()`:
 
 ```dart
