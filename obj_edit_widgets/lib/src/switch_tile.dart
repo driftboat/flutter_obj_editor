@@ -22,6 +22,7 @@ class _SwitchTileState<T> extends State<SwitchTile> {
         });
       },
       value: widget.open,
+      contentPadding: EdgeInsets.zero,
       title: Text(widget.title),
     );
   }
