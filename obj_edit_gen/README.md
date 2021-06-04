@@ -153,6 +153,6 @@ directory.
 - [x] text|int|double field annotation: `@ObjEditTextSetting`  
 - [x] option field annotation: `@ObjEditOptionSetting`
 - [x] bool field annotation: `@ObjEditBoolSetting`
-- [] date field  
+- [ ] date field  
 
 [example]: https://github.com/driftboat/flutter_obj_editor/tree/main/example
