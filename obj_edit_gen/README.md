@@ -147,11 +147,12 @@ code generator to generate the missing `.e.dart` generated dart files.
 run `flutter pub run build_runner build` in your package
 directory.
 
-# Annotation values
+# Annotation values 
 
- 
-1. class annotation: `@ObjEdit`.
-2. text field annotation: `@ObjEditTextSetting`  
-3. option field annotation: `@ObjEditOptionSetting`
+- [x] class annotation: `@ObjEdit`.
+- [x] text|int|double field annotation: `@ObjEditTextSetting`  
+- [x] option field annotation: `@ObjEditOptionSetting`
+- [x] bool field annotation: `@ObjEditBoolSetting`
+- [] date field  
 
 [example]: https://github.com/driftboat/flutter_obj_editor/tree/main/example
