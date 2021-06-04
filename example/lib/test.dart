@@ -40,6 +40,9 @@ class Test {
   @ObjEditTextSetting(sectionName: "section2", title: "Coin", hint: "coin")
   double coin;
 
+  @ObjEditBoolSetting(sectionName: "section2", title: "IsVip")
+  bool isVip;
+
   Test(this.name, this.option, this.objOption, this.name2, this.option2,
-      this.age, this.coin);
+      this.age, this.coin, this.isVip);
 }

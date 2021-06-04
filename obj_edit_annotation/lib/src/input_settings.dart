@@ -19,3 +19,9 @@ class ObjEditOptionSetting<T> {
   const ObjEditOptionSetting(
       {required this.sectionName, required this.title, required this.options});
 }
+
+class ObjEditBoolSetting {
+  final String sectionName;
+  final String title;
+  const ObjEditBoolSetting({required this.sectionName, required this.title});
+}

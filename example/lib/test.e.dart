@@ -96,6 +96,13 @@ class TestWidget extends StatelessWidget {
             obj!.coin = double.parse(text);
           },
         ),
+        SwitchTile(
+          "IsVip",
+          obj!.isVip,
+          onChanged: (value) {
+            obj!.isVip = value;
+          },
+        ),
       ]),
     ]);
   }

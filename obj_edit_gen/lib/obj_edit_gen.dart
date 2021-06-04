@@ -9,6 +9,7 @@ import 'package:source_gen/source_gen.dart';
 
 const _textSettingChecker = TypeChecker.fromRuntime(ObjEditTextSetting);
 const _optionSettingChecker = TypeChecker.fromRuntime(ObjEditOptionSetting);
+const _boolSettingChecker = TypeChecker.fromRuntime(ObjEditBoolSetting);
 
 class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
   @override
@@ -87,6 +88,21 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
                 e.type.getDisplayString(withNullability: true),
                 title,
                 options));
+          } else {
+            var boolAnnotation = _boolSettingChecker.firstAnnotationOf(e);
+            if (boolAnnotation != null) {
+              final reader = ConstantReader(boolAnnotation);
+              final sectionName =
+                  reader.read('sectionName').literalValue as String;
+              final title = reader.read('title').literalValue as String;
+              var section = sections[sectionName];
+              print(sectionName);
+              if (section == null) {
+                section = new Section(sectionName);
+                sections[sectionName] = section;
+              }
+              section.fields.add(new BoolFeild(e.name, title));
+            }
           }
         }
       }
@@ -100,6 +116,8 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
         } else if (field is OptionField) {
           codeBuffer.write(
               optionTile(field.title, field.type, field.name, field.options));
+        } else if (field is BoolFeild) {
+          codeBuffer.write(swithTile(field.title, field.name));
         }
       });
       codeBuffer.write(finishSection());
@@ -194,6 +212,18 @@ class ${className}Widget extends StatelessWidget{
           },
         ),
 """;
+  }
+
+  swithTile(String title, String property) {
+    return """
+      SwitchTile(
+                "${title}",
+                obj!.${property},
+                onChanged: (value){
+            obj!.${property} = value;
+          },
+      ),
+                 """;
   }
 
   startSection(Section section) {

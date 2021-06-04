@@ -30,6 +30,6 @@ class MyApp extends StatelessWidget {
             appBar: AppBar(title: Text('ObjEdit')),
             body: TestWidget(
                 obj: new Test("name1", "option1", new ObjOption("objOption1"),
-                    "name2", "option2", 18, 120.5))));
+                    "name2", "option2", 18, 120.5, false))));
   }
 }

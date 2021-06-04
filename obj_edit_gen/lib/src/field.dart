@@ -25,3 +25,8 @@ class OptionField<T> extends BaseField {
   final String options;
   OptionField(name, this.type, this.title, this.options) : super(name);
 }
+
+class BoolFeild extends BaseField {
+  final String title;
+  BoolFeild(name, this.title) : super(name);
+}
