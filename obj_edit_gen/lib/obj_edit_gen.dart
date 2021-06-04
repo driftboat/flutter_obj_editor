@@ -135,9 +135,11 @@ import 'package:obj_edit_widgets/obj_edit_widgets.dart';
 
 class ${className}Widget extends StatelessWidget{
     final ${className}? obj;
+    final ValueChanged<String>? onChanged;
     ${className}Widget({
       Key? key, 
-      this.obj
+      this.obj,
+      this.onChanged
     }) : super(key: key);
     
     @override
@@ -184,7 +186,7 @@ class ${className}Widget extends StatelessWidget{
                 icon: ${icon},
                 initText: ${initValue}, 
                 textTileType:${textTileTypeStr},
-                onChanged: (String text) {  ${setValue} },
+                onChanged: (String text) {  ${setValue} onChanged?.call("${property}"); },
               ),
               """
         : """
@@ -193,7 +195,7 @@ class ${className}Widget extends StatelessWidget{
                 hintText: "${hint}", 
                 initText: ${initValue}, 
                 textTileType:${textTileTypeStr},
-                onChanged: (String text) { ${setValue} },
+                onChanged: (String text) { ${setValue} onChanged?.call("${property}"); },
               ),
               """;
   }
@@ -209,6 +211,7 @@ class ${className}Widget extends StatelessWidget{
           },
           onChanged: (value){
             obj!.${property} = value;
+            onChanged?.call("${property}");
           },
         ),
 """;
@@ -221,6 +224,7 @@ class ${className}Widget extends StatelessWidget{
                 obj!.${property},
                 onChanged: (value){
             obj!.${property} = value;
+            onChanged?.call("${property}");
           },
       ),
                  """;

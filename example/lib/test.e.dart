@@ -11,7 +11,8 @@ import 'package:obj_edit_widgets/obj_edit_widgets.dart';
 
 class TestWidget extends StatelessWidget {
   final Test? obj;
-  TestWidget({Key? key, this.obj}) : super(key: key);
+  final ValueChanged<String>? onChanged;
+  TestWidget({Key? key, this.obj, this.onChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,7 @@ class TestWidget extends StatelessWidget {
           textTileType: TextTileType.text,
           onChanged: (String text) {
             obj!.name = text;
+            onChanged?.call("name");
           },
         ),
         DropDownTile<String>(
@@ -39,6 +41,7 @@ class TestWidget extends StatelessWidget {
           },
           onChanged: (value) {
             obj!.option = value;
+            onChanged?.call("option");
           },
         ),
         DropDownTile<ObjOption>(
@@ -54,6 +57,7 @@ class TestWidget extends StatelessWidget {
           },
           onChanged: (value) {
             obj!.objOption = value;
+            onChanged?.call("objOption");
           },
         ),
       ]),
@@ -65,6 +69,7 @@ class TestWidget extends StatelessWidget {
           textTileType: TextTileType.password,
           onChanged: (String text) {
             obj!.name2 = text;
+            onChanged?.call("name2");
           },
         ),
         DropDownTile<String>(
@@ -76,6 +81,7 @@ class TestWidget extends StatelessWidget {
           },
           onChanged: (value) {
             obj!.option2 = value;
+            onChanged?.call("option2");
           },
         ),
         TextTile(
@@ -85,6 +91,7 @@ class TestWidget extends StatelessWidget {
           textTileType: TextTileType.number_int,
           onChanged: (String text) {
             obj!.age = int.parse(text);
+            onChanged?.call("age");
           },
         ),
         TextTile(
@@ -94,6 +101,7 @@ class TestWidget extends StatelessWidget {
           textTileType: TextTileType.number_double,
           onChanged: (String text) {
             obj!.coin = double.parse(text);
+            onChanged?.call("coin");
           },
         ),
         SwitchTile(
@@ -101,6 +109,7 @@ class TestWidget extends StatelessWidget {
           obj!.isVip,
           onChanged: (value) {
             obj!.isVip = value;
+            onChanged?.call("isVip");
           },
         ),
       ]),
