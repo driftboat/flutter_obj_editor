@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 enum TextTileType { text, password, number_int, number_double }
 
-class TextTile extends StatelessWidget {
+class TextTile extends StatefulWidget {
   final String title;
   final String? initText;
   final String? hintText;
@@ -11,6 +11,9 @@ class TextTile extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final TextEditingController? controller;
   final TextTileType? textTileType;
+  @override
+  State<StatefulWidget> createState() => _TextTileState();
+
   TextTile(
       {Key? key,
       this.title = "",
@@ -21,16 +24,20 @@ class TextTile extends StatelessWidget {
       this.controller,
       this.textTileType})
       : super(key: key);
+}
+
+class _TextTileState<T> extends State<TextTile> {
+  bool _passwordVisible = false;
   @override
   Widget build(BuildContext context) {
     var ttt = TextTileType.text;
-    if (textTileType != null) {
-      ttt = textTileType!;
+    if (widget.textTileType != null) {
+      ttt = widget.textTileType!;
     }
     return TextFormField(
-        onChanged: onChanged,
+        onChanged: widget.onChanged,
         cursorColor: Colors.black,
-        controller: controller,
+        controller: widget.controller,
         keyboardType:
             ttt == TextTileType.number_int || ttt == TextTileType.number_double
                 ? TextInputType.number
@@ -40,23 +47,34 @@ class TextTile extends StatelessWidget {
             : ttt == TextTileType.number_int
                 ? [FilteringTextInputFormatter.digitsOnly]
                 : [],
-        obscureText: ttt == TextTileType.password,
-        initialValue: initText,
-        decoration: icon != null
-            ? InputDecoration(
-                labelText: title,
-                prefixIcon: Icon(
-                  icon,
+        obscureText: ttt == TextTileType.password && !_passwordVisible,
+        initialValue: widget.initText,
+        decoration: InputDecoration(
+          labelText: widget.title,
+          prefixIcon: widget.icon != null
+              ? Icon(
+                  widget.icon,
                   color: Colors.black,
-                ),
-                hintText: hintText,
-                border: InputBorder.none,
-              )
-            : InputDecoration(
-                labelText: title,
-                hintText: hintText,
-                border: InputBorder.none,
-              ));
+                )
+              : null,
+          hintText: widget.hintText,
+          border: InputBorder.none,
+          suffixIcon: ttt == TextTileType.password
+              ? IconButton(
+                  icon: Icon(
+                    // Based on passwordVisible state choose the icon
+                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    color: Theme.of(context).primaryColorDark,
+                  ),
+                  onPressed: () {
+                    // Update the state i.e. toogle the state of passwordVisible variable
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  },
+                )
+              : null,
+        ));
   }
 }
 
