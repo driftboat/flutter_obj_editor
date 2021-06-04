@@ -25,6 +25,7 @@ class TestWidget extends StatelessWidget {
           hintText: "name1",
           icon: Icons.person,
           initText: obj!.name,
+          textTileType: TextTileType.text,
           onChanged: (String text) {
             obj!.name = text;
           },
@@ -61,6 +62,7 @@ class TestWidget extends StatelessWidget {
           title: "Name",
           hintText: "name2",
           initText: obj!.name2,
+          textTileType: TextTileType.password,
           onChanged: (String text) {
             obj!.name2 = text;
           },
@@ -74,6 +76,24 @@ class TestWidget extends StatelessWidget {
           },
           onChanged: (value) {
             obj!.option2 = value;
+          },
+        ),
+        TextTile(
+          title: "Age",
+          hintText: "age",
+          initText: obj!.age.toString(),
+          textTileType: TextTileType.number_int,
+          onChanged: (String text) {
+            obj!.age = int.parse(text);
+          },
+        ),
+        TextTile(
+          title: "Coin",
+          hintText: "coin",
+          initText: obj!.coin.toString(),
+          textTileType: TextTileType.number_double,
+          onChanged: (String text) {
+            obj!.coin = double.parse(text);
           },
         ),
       ]),

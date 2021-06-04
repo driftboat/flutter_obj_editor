@@ -136,6 +136,8 @@ class ${className}Widget extends StatelessWidget{
   textInputTile(TextFieldType? textFieldType, String title, String property,
       String hint, String? icon) {
     var textTileTypeStr = "TextTileType.text";
+    var setValue = " obj!.${property} = text;";
+    var initValue = "obj!.${property}";
     if (textFieldType != null) {
       switch (textFieldType) {
         case TextFieldType.password:
@@ -143,9 +145,13 @@ class ${className}Widget extends StatelessWidget{
           break;
         case TextFieldType.number_double:
           textTileTypeStr = "TextTileType.number_double";
+          setValue = " obj!.${property} =  double.parse(text);";
+          initValue = "obj!.${property}.toString()";
           break;
         case TextFieldType.number_int:
           textTileTypeStr = "TextTileType.number_int";
+          setValue = " obj!.${property} =  int.parse(text);";
+          initValue = "obj!.${property}.toString()";
           break;
         default:
           break;
@@ -158,18 +164,18 @@ class ${className}Widget extends StatelessWidget{
                 title: "${title}",
                 hintText: "${hint}",
                 icon: ${icon},
-                initText: obj!.${property}, 
+                initText: ${initValue}, 
                 textTileType:${textTileTypeStr},
-                onChanged: (String text) { obj!.${property} = text;},
+                onChanged: (String text) {  ${setValue} },
               ),
               """
         : """
     TextTile(
                 title: "${title}",
                 hintText: "${hint}", 
-                initText: obj!.${property}, 
+                initText: ${initValue}, 
                 textTileType:${textTileTypeStr},
-                onChanged: (String text) { obj!.${property} = text;},
+                onChanged: (String text) { ${setValue} },
               ),
               """;
   }
