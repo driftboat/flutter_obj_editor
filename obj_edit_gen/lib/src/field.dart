@@ -8,11 +8,15 @@ class BaseField implements Field {
   BaseField(this.name);
 }
 
+enum TextFieldType { text, password, number_int, number_double }
+
 class TextField extends BaseField {
+  final TextFieldType? fieldType;
   final String title;
   final String hint;
   final String? icon;
-  TextField(name, this.title, this.hint, {this.icon}) : super(name);
+  TextField(name, this.title, this.hint, {this.fieldType, this.icon})
+      : super(name);
 }
 
 class OptionField<T> extends BaseField {

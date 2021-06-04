@@ -26,23 +26,48 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
     if (element.kind == ElementKind.CLASS) {
       for (var e in ((element as ClassElement).fields)) {
         var sectionAnnotation = _textSettingChecker.firstAnnotationOf(e);
-        if (sectionAnnotation != null && e.type.isDartCoreString) {
+        if (sectionAnnotation != null) {
           var reader = ConstantReader(sectionAnnotation);
           var sectionName = reader.read('sectionName').literalValue as String;
           final title = reader.read('title').literalValue as String;
           final hint = reader.read('hint').literalValue as String;
           final icon = reader.read('icon').literalValue;
-
+          final obscure = reader.read('obscure').literalValue;
           var section = sections[sectionName];
           if (section == null) {
             section = new Section(sectionName);
             sections[sectionName] = section;
           }
-          if (icon != null)
-            section.fields.add(
-                new TextField(e.name, title, hint, icon: (icon as String)));
-          else {
-            section.fields.add(new TextField(e.name, title, hint));
+          if (e.type.isDartCoreString) {
+            var tft = TextFieldType.text;
+            if (obscure != null) {
+              bool isObsucre = obscure as bool;
+              if (isObsucre) tft = TextFieldType.password;
+            }
+            if (icon != null)
+              section.fields.add(new TextField(e.name, title, hint,
+                  icon: (icon as String), fieldType: tft));
+            else {
+              section.fields
+                  .add(new TextField(e.name, title, hint, fieldType: tft));
+            }
+          } else if (e.type.isDartCoreDouble) {
+            if (icon != null)
+              section.fields.add(new TextField(e.name, title, hint,
+                  icon: (icon as String),
+                  fieldType: TextFieldType.number_double));
+            else {
+              section.fields.add(new TextField(e.name, title, hint,
+                  fieldType: TextFieldType.number_double));
+            }
+          } else if (e.type.isDartCoreInt) {
+            if (icon != null)
+              section.fields.add(new TextField(e.name, title, hint,
+                  icon: (icon as String), fieldType: TextFieldType.number_int));
+            else {
+              section.fields.add(new TextField(e.name, title, hint,
+                  fieldType: TextFieldType.number_int));
+            }
           }
         } else {
           var optionAnnotation = _optionSettingChecker.firstAnnotationOf(e);
@@ -70,8 +95,8 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
       codeBuffer..write(startSection(section));
       section.fields.forEach((field) {
         if (field is TextField) {
-          codeBuffer.write(
-              textInputTile(field.title, field.name, field.hint, field.icon));
+          codeBuffer.write(textInputTile(field.fieldType, field.title,
+              field.name, field.hint, field.icon));
         } else if (field is OptionField) {
           codeBuffer.write(
               optionTile(field.title, field.type, field.name, field.options));
@@ -108,7 +133,25 @@ class ${className}Widget extends StatelessWidget{
     """;
   }
 
-  textInputTile(String title, String property, String hint, String? icon) {
+  textInputTile(TextFieldType? textFieldType, String title, String property,
+      String hint, String? icon) {
+    var textTileTypeStr = "TextTileType.text";
+    if (textFieldType != null) {
+      switch (textFieldType) {
+        case TextFieldType.password:
+          textTileTypeStr = "TextTileType.password";
+          break;
+        case TextFieldType.number_double:
+          textTileTypeStr = "TextTileType.number_double";
+          break;
+        case TextFieldType.number_int:
+          textTileTypeStr = "TextTileType.number_int";
+          break;
+        default:
+          break;
+      }
+    }
+
     return icon != null
         ? """
     TextTile(
@@ -116,6 +159,7 @@ class ${className}Widget extends StatelessWidget{
                 hintText: "${hint}",
                 icon: ${icon},
                 initText: obj!.${property}, 
+                textTileType:${textTileTypeStr},
                 onChanged: (String text) { obj!.${property} = text;},
               ),
               """
@@ -124,6 +168,7 @@ class ${className}Widget extends StatelessWidget{
                 title: "${title}",
                 hintText: "${hint}", 
                 initText: obj!.${property}, 
+                textTileType:${textTileTypeStr},
                 onChanged: (String text) { obj!.${property} = text;},
               ),
               """;

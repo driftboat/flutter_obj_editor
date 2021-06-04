@@ -3,11 +3,13 @@ class ObjEditTextSetting {
   final String title;
   final String hint;
   final String? icon;
+  final bool? obscure;
   const ObjEditTextSetting(
       {required this.sectionName,
       required this.title,
       required this.hint,
-      this.icon});
+      this.icon,
+      this.obscure});
 }
 
 class ObjEditOptionSetting<T> {

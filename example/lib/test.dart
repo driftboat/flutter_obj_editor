@@ -24,13 +24,22 @@ class Test {
           '<ObjOption>[new ObjOption("objOption1"),new ObjOption("objOption2"),new ObjOption("objOption3")]')
   ObjOption objOption;
 
-  @ObjEditTextSetting(sectionName: "section2", title: "Name", hint: "name2")
+  @ObjEditTextSetting(
+      sectionName: "section2", title: "Name", hint: "name2", obscure: true)
   String name2;
+
   @ObjEditOptionSetting(
       sectionName: "section2",
       title: "Option",
       options: '<String>["option1","option2","option3"]')
   String option2;
 
-  Test(this.name, this.option, this.objOption, this.name2, this.option2);
+  @ObjEditTextSetting(sectionName: "section2", title: "Age", hint: "age")
+  int age;
+
+  @ObjEditTextSetting(sectionName: "section2", title: "Coin", hint: "coin")
+  double coin;
+
+  Test(this.name, this.option, this.objOption, this.name2, this.option2,
+      this.age, this.coin);
 }
