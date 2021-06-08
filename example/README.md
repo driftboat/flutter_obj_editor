@@ -5,12 +5,12 @@ dependencies to your `pubspec.yaml`.
 
 ```yaml
 dependencies: 
-  obj_edit_annotation: ^1.0.0
-  obj_edit_widgets: ^1.0.0 
+  obj_edit_annotation: ^1.0.2
+  obj_edit_widgets: ^1.0.1
 
 dev_dependencies: 
   build_runner: ^2.0.0
-  obj_edit_gen: ^1.0.0
+  obj_edit_gen: ^1.0.2
 ```
 
 Annotate your code with classes defined in
