@@ -1,7 +1,7 @@
 name: obj_edit_gen
 description:  Automatically generate code for converting to widget by annotating
   Dart classes.
-version: 1.0.1
+version: 1.0.2
 repository: https://github.com/driftboat/flutter_obj_editor/tree/main/obj_edit_gen
 
 environment:
@@ -10,7 +10,7 @@ environment:
 dependencies: 
  analyzer: '>=0.41.2 <2.0.0'
  source_gen: ^1.0.0
- obj_edit_annotation: ^1.0.0
+ obj_edit_annotation: ^1.0.2
  build: ^2.0.0
  build_config: ^1.0.0   
 

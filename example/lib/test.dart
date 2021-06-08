@@ -21,7 +21,8 @@ class Test {
       sectionName: "section1",
       title: "ObjOption",
       options:
-          '<ObjOption>[new ObjOption("objOption1"),new ObjOption("objOption2"),new ObjOption("objOption3")]')
+          '<ObjOption>[new ObjOption("objOption1"),new ObjOption("objOption2"),new ObjOption("objOption3")]',
+      condition: 'obj!.name == "123"')
   ObjOption objOption;
 
   @ObjEditTextSetting(
@@ -37,12 +38,24 @@ class Test {
   @ObjEditTextSetting(sectionName: "section2", title: "Age", hint: "age")
   int age;
 
-  @ObjEditTextSetting(sectionName: "section2", title: "Coin", hint: "coin")
+  @ObjEditTextSetting(
+      sectionName: "section2",
+      title: "Coin",
+      hint: "coin",
+      condition: 'obj!.age > 10')
   double coin;
 
-  @ObjEditBoolSetting(sectionName: "section2", title: "IsVip")
+  @ObjEditBoolSetting(
+      sectionName: "section2", title: "IsVip", condition: 'obj!.age > 10')
   bool isVip;
 
+  @ObjEditTextSetting(
+      sectionName: "section2",
+      title: "Star",
+      hint: "star",
+      condition: 'obj!.age <= 10')
+  double star;
+
   Test(this.name, this.option, this.objOption, this.name2, this.option2,
-      this.age, this.coin, this.isVip);
+      this.age, this.coin, this.isVip, this.star);
 }

@@ -8,8 +8,21 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Test? testObj;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    testObj = new Test("name1", "option1", new ObjOption("objOption1"), "name2",
+        "option2", 18, 120.5, false, 10);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +42,11 @@ class MyApp extends StatelessWidget {
         home: new Scaffold(
             appBar: AppBar(title: Text('ObjEdit')),
             body: TestWidget(
-                obj: new Test("name1", "option1", new ObjOption("objOption1"),
-                    "name2", "option2", 18, 120.5, false))));
+                obj: testObj,
+                onChanged: (peropertyName) {
+                  if (peropertyName == "name" || peropertyName == "age") {
+                    setState(() {});
+                  }
+                })));
   }
 }

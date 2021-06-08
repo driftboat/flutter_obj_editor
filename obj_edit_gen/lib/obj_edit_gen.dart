@@ -34,6 +34,7 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
           final hint = reader.read('hint').literalValue as String;
           final icon = reader.read('icon').literalValue;
           final obscure = reader.read('obscure').literalValue;
+          final condition = reader.read('condition').literalValue;
           var section = sections[sectionName];
           if (section == null) {
             section = new Section(sectionName);
@@ -46,27 +47,27 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
               if (isObsucre) tft = TextFieldType.password;
             }
             if (icon != null)
-              section.fields.add(new TextField(e.name, title, hint,
+              section.fields.add(new TextField(e.name, condition, title, hint,
                   icon: (icon as String), fieldType: tft));
             else {
-              section.fields
-                  .add(new TextField(e.name, title, hint, fieldType: tft));
+              section.fields.add(new TextField(e.name, condition, title, hint,
+                  fieldType: tft));
             }
           } else if (e.type.isDartCoreDouble) {
             if (icon != null)
-              section.fields.add(new TextField(e.name, title, hint,
+              section.fields.add(new TextField(e.name, condition, title, hint,
                   icon: (icon as String),
                   fieldType: TextFieldType.number_double));
             else {
-              section.fields.add(new TextField(e.name, title, hint,
+              section.fields.add(new TextField(e.name, condition, title, hint,
                   fieldType: TextFieldType.number_double));
             }
           } else if (e.type.isDartCoreInt) {
             if (icon != null)
-              section.fields.add(new TextField(e.name, title, hint,
+              section.fields.add(new TextField(e.name, condition, title, hint,
                   icon: (icon as String), fieldType: TextFieldType.number_int));
             else {
-              section.fields.add(new TextField(e.name, title, hint,
+              section.fields.add(new TextField(e.name, condition, title, hint,
                   fieldType: TextFieldType.number_int));
             }
           }
@@ -77,6 +78,7 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
             var sectionName = reader.read('sectionName').literalValue as String;
             final title = reader.read('title').literalValue as String;
             var options = reader.read('options').literalValue as String;
+            final condition = reader.read('condition').literalValue;
             var section = sections[sectionName];
             print(sectionName);
             if (section == null) {
@@ -85,6 +87,7 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
             }
             section.fields.add(new OptionField(
                 e.name,
+                condition,
                 e.type.getDisplayString(withNullability: true),
                 title,
                 options));
@@ -95,35 +98,51 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
               final sectionName =
                   reader.read('sectionName').literalValue as String;
               final title = reader.read('title').literalValue as String;
+              final condition = reader.read('condition').literalValue;
               var section = sections[sectionName];
               print(sectionName);
               if (section == null) {
                 section = new Section(sectionName);
                 sections[sectionName] = section;
               }
-              section.fields.add(new BoolFeild(e.name, title));
+              section.fields.add(new BoolFeild(e.name, condition, title));
             }
           }
         }
       }
     }
+    var sectionId = 1;
     sections.forEach((k, section) {
-      codeBuffer..write(startSection(section));
-      section.fields.forEach((field) {
-        if (field is TextField) {
-          codeBuffer.write(textInputTile(field.fieldType, field.title,
-              field.name, field.hint, field.icon));
-        } else if (field is OptionField) {
-          codeBuffer.write(
-              optionTile(field.title, field.type, field.name, field.options));
-        } else if (field is BoolFeild) {
-          codeBuffer.write(swithTile(field.title, field.name));
-        }
-      });
-      codeBuffer.write(finishSection());
+      codeBuffer..writeln(addSection(section, sectionId));
+      sectionId++;
     });
     codeBuffer.writeln("]);");
-    codeBuffer.writeln("}}");
+    codeBuffer.writeln("}");
+
+    sectionId = 1;
+    sections.forEach((k, section) {
+      codeBuffer..write(startBuildSection(section, sectionId));
+      section.fields.forEach((field) {
+        if (field is TextField) {
+          codeBuffer.write(startAddTile(field.condition));
+          codeBuffer.write(textInputTile(field.fieldType, field.title,
+              field.name, field.hint, field.icon));
+          codeBuffer.write(endAddTile());
+        } else if (field is OptionField) {
+          codeBuffer.write(startAddTile(field.condition));
+          codeBuffer.write(
+              optionTile(field.title, field.type, field.name, field.options));
+          codeBuffer.write(endAddTile());
+        } else if (field is BoolFeild) {
+          codeBuffer.write(startAddTile(field.condition));
+          codeBuffer.write(swithTile(field.title, field.name));
+          codeBuffer.write(endAddTile());
+        }
+      });
+      codeBuffer..writeln(endBuildSection());
+      sectionId++;
+    });
+    codeBuffer.writeln("}");
     return codeBuffer.toString();
   }
 
@@ -230,15 +249,41 @@ class ${className}Widget extends StatelessWidget{
                  """;
   }
 
-  startSection(Section section) {
+  addSection(Section section, int sectionId) {
     return """
      ObjSection(
             title: '${section.name}',
-            tiles: [
+            tiles: buildSection${sectionId}(),),
             """;
   }
 
-  finishSection() {
-    return "]),";
+  startBuildSection(Section section, int sectionId) {
+    return """
+  buildSection${sectionId}() {
+    final List<Widget> tiles = [];
+            """;
+  }
+
+  startAddTile(String? condition) {
+    if (condition != null) {
+      return """
+      if(${condition})tiles.add(
+       """;
+    }
+    return """
+      tiles.add(
+       """;
+  }
+
+  endAddTile() {
+    return """
+    );
+       """;
+  }
+
+  endBuildSection() {
+    return """
+        return tiles;
+  } """;
   }
 }
