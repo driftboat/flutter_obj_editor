@@ -1,7 +1,7 @@
 name: obj_edit_annotation
 description: Classes and helper functions that support widget code generation via the
   `obj_edit_gen` package.
-version: 1.0.2
+version: 1.0.3
 repository: https://github.com/driftboat/flutter_obj_editor/tree/main/obj_edit_annotation
 
 environment:
