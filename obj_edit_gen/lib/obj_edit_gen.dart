@@ -26,15 +26,20 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
 
     if (element.kind == ElementKind.CLASS) {
       for (var e in ((element as ClassElement).fields)) {
+        print("===start field:" + e.name);
         var sectionAnnotation = _textSettingChecker.firstAnnotationOf(e);
         if (sectionAnnotation != null) {
           var reader = ConstantReader(sectionAnnotation);
           var sectionName = reader.read('sectionName').literalValue as String;
           final title = reader.read('title').literalValue as String;
-          final hint = reader.read('hint').literalValue as String;
+          final hintCheck = reader.read('hint').literalValue;
           final icon = reader.read('icon').literalValue;
           final obscure = reader.read('obscure').literalValue;
           final condition = reader.read('condition').literalValue;
+          var hint = "";
+          if (hintCheck != null) {
+            hint = hintCheck as String;
+          }
           var section = sections[sectionName];
           if (section == null) {
             section = new Section(sectionName);
@@ -80,7 +85,6 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
             var options = reader.read('options').literalValue as String;
             final condition = reader.read('condition').literalValue;
             var section = sections[sectionName];
-            print(sectionName);
             if (section == null) {
               section = new Section(sectionName);
               sections[sectionName] = section;
@@ -100,7 +104,6 @@ class ObjEditGenerator extends GeneratorForAnnotation<ObjEdit> {
               final title = reader.read('title').literalValue as String;
               final condition = reader.read('condition').literalValue;
               var section = sections[sectionName];
-              print(sectionName);
               if (section == null) {
                 section = new Section(sectionName);
                 sections[sectionName] = section;
