@@ -1,14 +1,14 @@
 class ObjEditTextSetting {
   final String sectionName;
   final String title;
-  final String hint;
+  final String? hint;
   final String? icon;
   final bool? obscure;
   final String? condition;
   const ObjEditTextSetting(
       {required this.sectionName,
       required this.title,
-      required this.hint,
+      this.hint,
       this.icon,
       this.obscure,
       this.condition});
