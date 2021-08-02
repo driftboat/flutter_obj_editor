@@ -1,5 +1,5 @@
 # flutter_obj_editor
-auto generate widget from dart class, custom apperence by rewrite "obj_edit_widgets"
+auto generate widget from dart class, custom apperence by rewrite "obj_edit_widgets" 
 
 Example:
 ```dart
